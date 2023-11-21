@@ -6,9 +6,13 @@ services:
         dockerfile: Dockerfile
     env_file:
       - docker.env
+#    link local changes to container for continuous development
+    volumes:
+      - .:/srv/app
     ports:
       - "0.0.0.0:8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
 
 volumes:
   static_data:
+    
