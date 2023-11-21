@@ -6,11 +6,15 @@ RUN apt-get update
 # -y say yes to all question when installing
 RUN apt-get install python3-dev build-essential -y
 
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV VIRTUAL_ENV=/opt/venv
 # pip requirements
 RUN pip install --upgrade pip
 
 # creates venv under opt directory
-RUN pip install virtualenv && python -m virtualenv /opt/venv
+RUN pip install virtualenv && python -m virtualenv $VIRTUAL_ENV
 
 # coppy locaded root directory  requirements.txt under temp directory
 ADD ./requirements.txt /tmp/requirements.txt
@@ -24,7 +28,7 @@ COPY . /srv/app
 
 # Linux inside docker gonna use python inside venv
 
-ENV PATH="/opt/venv/bin:$PATH"
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # set working directory
 
