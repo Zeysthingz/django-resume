@@ -58,7 +58,7 @@ $(document).ready(function(){
                 $(form).ajaxSubmit({
                     type:"POST",
                     data: $(form).serialize(),
-                    url:"/contact/contact_form",
+                    url:"contact_form",
                     success: function(response) {
                         console.log(response);
                         if (response.success) {
