@@ -1,5 +1,11 @@
 from django.http import JsonResponse
+from django.shortcuts import render
 
+
+# contact page
+def contacts(request):
+    context = {}
+    return render(request, 'contact.html', context)
 
 def contact_form(request):
     context = {

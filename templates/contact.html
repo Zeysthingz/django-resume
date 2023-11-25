@@ -46,6 +46,7 @@
             <div class="col-lg-9">
                 <form class="row contact_form" action="{% url 'contact_form' %}" method="post" id="contactForm"
                       novalidate="novalidate">
+                     {% csrf_token %}
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
