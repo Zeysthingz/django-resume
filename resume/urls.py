@@ -25,12 +25,10 @@ urlpatterns = [
     path('', include('core.urls')),
 
    # contact page
-    path('', include('contact.urls')),
+    path('contact/', include('contact.urls')),
 ]
 
 # Serve static files and media files during development
 if settings.DEBUG:
-    print(settings.DEBUG)
-    print("1111")
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
