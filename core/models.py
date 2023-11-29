@@ -2,7 +2,7 @@ from django.db import models
 
 
 class GeneralSetting(models.Model):
-    site_name = models.CharField(
+    site_title= models.CharField(
         default='',
         max_length=256,
         blank=True,
@@ -13,16 +13,18 @@ class GeneralSetting(models.Model):
     description = models.CharField(
         default='',
         max_length=256,
+        blank=True,
         null=True,
-        verbose_name='',
+        verbose_name='Description',
         help_text='',
     )
 
     parameters = models.CharField(
         default='',
-        max_length=256,
+        max_length=10000,
         blank=True,
-        verbose_name='',
+        null=True,
+        verbose_name='Parameters',
         help_text='',
     )
     updated_at = models.DateTimeField(
@@ -41,7 +43,7 @@ class GeneralSetting(models.Model):
     class Meta:
         verbose_name = 'General Setting'
         verbose_name_plural = 'General Settings'
-        ordering = ('site_name',)
+        ordering = ('site_title',)
 
     def __str__(self):
-        return self.site_name
+        return self.site_title
