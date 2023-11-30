@@ -100,3 +100,25 @@ class ExperienceModelAdmin(admin.ModelAdmin):
     class Meta:
         model = ExperienceModel
 
+@admin.register(EducationModel)
+class EducationModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'school_name',
+        'school_location',
+        'major_title',
+        'start_date',
+        'updated_at',
+        'created_at'
+    ]
+    search_fields = [
+        'school_name',
+        'school_location',
+    ]
+    list_editable = [
+        'school_name',
+        'school_location',
+    ]
+
+    class Meta:
+        model = EducationModel

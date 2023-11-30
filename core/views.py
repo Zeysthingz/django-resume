@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from .models import (
-    GeneralSetting,
+    EducationModel,
     ExperienceModel,
+    GeneralSetting,
     ImageSetting,
     SkillModel,
 )
@@ -27,6 +28,9 @@ def index(request):
     # Experiences
     experiences = ExperienceModel.objects.all().order_by('-start_date')
 
+    # education
+    educations = EducationModel.objects.all().order_by('-start_date')
+
     context = {
         'site_title': site_title,
         'site_keywords': site_keywords,
@@ -38,5 +42,6 @@ def index(request):
         'site_fav_icon': site_fav_icon,
         'skills': skills,
         'experiences': experiences,
+        'educations': educations,
     }
     return render(request, 'index.html', context)

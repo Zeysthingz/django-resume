@@ -171,4 +171,40 @@ class ExperienceModel(AbastractModel):
     def __str__(self):
         return self.company_name
 
+class EducationModel(AbastractModel):
+    school_name = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='School Name',
+        help_text='',
+    )
+    major_title = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Major Title',
+        help_text='',
+    )
+    school_location = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='School Location',
+        help_text='',
+    )
+    start_date = models.DateField(
+        verbose_name='Start Date'
+
+    )
+    class Meta:
+        verbose_name = 'Education Setting'
+        verbose_name_plural = 'Education Settings'
+        ordering = ('start_date',)
+
+    def __str__(self):
+        return self.school_name
 
