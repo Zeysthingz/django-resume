@@ -47,3 +47,50 @@ class GeneralSetting(models.Model):
 
     def __str__(self):
         return self.site_title
+
+
+class ImageSetting(models.Model):
+    name= models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Name',
+        help_text='',
+    )
+    description = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Description',
+        help_text='',
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        blank=True,
+        verbose_name='Updated',
+        help_text='',
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        blank=True,
+        verbose_name='Created',
+        help_text='',
+    )
+    file=models.ImageField(
+        default='',
+        blank=True,
+        null=True,
+        verbose_name='Image',
+        help_text='',
+        upload_to='images/',
+    )
+
+    class Meta:
+        verbose_name = 'Image Setting'
+        verbose_name_plural = 'Image Settings'
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
