@@ -163,6 +163,7 @@ class ExperienceModel(AbstractModel):
         verbose_name='End Date'
 
     )
+
     class Meta:
         verbose_name = 'Experience Setting'
         verbose_name_plural = 'Experience Settings'
@@ -170,6 +171,7 @@ class ExperienceModel(AbstractModel):
 
     def __str__(self):
         return self.company_name
+
 
 class EducationModel(AbstractModel):
     school_name = models.CharField(
@@ -200,6 +202,7 @@ class EducationModel(AbstractModel):
         verbose_name='Start Date'
 
     )
+
     class Meta:
         verbose_name = 'Education Setting'
         verbose_name_plural = 'Education Settings'
@@ -238,3 +241,42 @@ class SocialMediaModel(AbstractModel):
 
     def __str__(self):
         return self.url
+
+class DocumentModel(AbstractModel):
+    order = models.IntegerField(
+        default=0,
+        verbose_name='Order',
+    )
+    slug_name=models.SlugField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Slug Name',
+        help_text='',
+    )
+
+    file = models.FileField(
+        default='',
+        blank=True,
+        null=True,
+        verbose_name='File',
+        help_text='',
+        upload_to='documents/',
+    )
+    button_text = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Button Text',
+        help_text='',
+    )
+
+    class Meta:
+        verbose_name = 'Document Setting'
+        verbose_name_plural = 'Document Settings'
+        ordering = ('order',)
+
+    def __str__(self):
+        return self.name
