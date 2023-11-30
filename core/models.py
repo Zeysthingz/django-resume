@@ -2,7 +2,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
-class AbastractModel(models.Model):
+class AbstractModel(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
         blank=True,
@@ -20,7 +20,7 @@ class AbastractModel(models.Model):
         abstract = True
 
 
-class GeneralSetting(AbastractModel):
+class GeneralSetting(AbstractModel):
     site_title = models.CharField(
         default='',
         max_length=256,
@@ -56,7 +56,7 @@ class GeneralSetting(AbastractModel):
         return self.site_title
 
 
-class ImageSetting(AbastractModel):
+class ImageSetting(AbstractModel):
     name = models.CharField(
         default='',
         max_length=256,
@@ -91,7 +91,7 @@ class ImageSetting(AbastractModel):
         return self.name
 
 
-class SkillModel(AbastractModel):
+class SkillModel(AbstractModel):
     order = models.IntegerField(
         default=0,
         verbose_name='Order',
@@ -127,7 +127,7 @@ class SkillModel(AbastractModel):
         return self.name
 
 
-class ExperienceModel(AbastractModel):
+class ExperienceModel(AbstractModel):
     company_name = models.CharField(
         default='',
         max_length=256,
@@ -171,7 +171,7 @@ class ExperienceModel(AbastractModel):
     def __str__(self):
         return self.company_name
 
-class EducationModel(AbastractModel):
+class EducationModel(AbstractModel):
     school_name = models.CharField(
         default='',
         max_length=256,
@@ -208,3 +208,33 @@ class EducationModel(AbastractModel):
     def __str__(self):
         return self.school_name
 
+
+class SocialMediaModel(AbstractModel):
+    order = models.IntegerField(
+        default=0,
+        verbose_name='Order',
+    )
+    url = models.URLField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='URL',
+        help_text='',
+    )
+    icon = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Icon',
+        help_text='',
+    )
+
+    class Meta:
+        verbose_name = 'Social Media Setting'
+        verbose_name_plural = 'Social Media Settings'
+        ordering = ('order',)
+
+    def __str__(self):
+        return self.url

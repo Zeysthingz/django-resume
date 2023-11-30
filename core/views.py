@@ -5,6 +5,7 @@ from .models import (
     GeneralSetting,
     ImageSetting,
     SkillModel,
+    SocialMediaModel,
 )
 
 
@@ -28,8 +29,12 @@ def index(request):
     # Experiences
     experiences = ExperienceModel.objects.all().order_by('-start_date')
 
-    # education
+    # Education
     educations = EducationModel.objects.all().order_by('-start_date')
+
+    # Social Media
+    social_medias= SocialMediaModel.objects.all().order_by('order')
+
 
     context = {
         'site_title': site_title,
@@ -43,5 +48,6 @@ def index(request):
         'skills': skills,
         'experiences': experiences,
         'educations': educations,
+        'social_medias': social_medias,
     }
     return render(request, 'index.html', context)

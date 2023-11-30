@@ -122,3 +122,26 @@ class EducationModelAdmin(admin.ModelAdmin):
 
     class Meta:
         model = EducationModel
+
+@admin.register(SocialMediaModel)
+class SocialMediaModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'url',
+        'icon',
+        'order',
+        'updated_at',
+        'created_at'
+    ]
+    search_fields = [
+        'url',
+        'icon',
+    ]
+    list_editable = [
+        'url',
+        'icon',
+        'order',
+    ]
+
+    class Meta:
+        model = SocialMediaModel

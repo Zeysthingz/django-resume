@@ -23,12 +23,10 @@
                                 <li><a href="javascript:void(0)"><i class="lnr lnr-home"></i>Umranıye, Turkey</a></li>
                             </ul>
                             <ul class="list personal_social">
-                                <li><a href="https://www.linkedin.com/in/zeynepakbalik/" target="_blank"><i
-                                        class="fa fa-linkedin"></i></a></li>
-                                <li><a href="https://github.com/Zeysthingz" target="_blank"><i class="fa fa-github"></i></a>
-                                </li>
-                                <li><a href="https://www.instagram.com/Zeysthingz/" target="_blank"><i
-                                        class="fa fa-instagram"></i></a></li>
+                                {% for social_meadia in social_medias %}
+                                <li><a href="{{ social_meadia.url }}" target="_blank"><i
+                                        class="{{ social_meadia.icon }}"></i></a></li>
+                                {% endfor %}
                             </ul>
 
                         </div>
