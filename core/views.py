@@ -60,8 +60,5 @@ def index(request):
 
 def redirect_urls(request,slug):
     document=get_object_or_404(DocumentModel,slug=slug)
-
     if document:
         return redirect(document.file.url)
-    else:
-        return redirect(request, 'index')
