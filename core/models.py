@@ -247,7 +247,7 @@ class DocumentModel(AbstractModel):
         default=0,
         verbose_name='Order',
     )
-    slug_name=models.SlugField(
+    slug=models.SlugField(
         default='',
         max_length=256,
         blank=True,

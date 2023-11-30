@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import (
+    DocumentModel,
     EducationModel,
     ExperienceModel,
     GeneralSetting,
@@ -51,3 +52,11 @@ def index(request):
         'social_medias': social_medias,
     }
     return render(request, 'index.html', context)
+
+
+def redirect_urls(request,slug):
+    cv=get_object_or_404(DocumentModel,slug=slug)
+    if cv:
+        return redirect(cv.file.url)
+    else:
+        return redirect(request, 'index')
