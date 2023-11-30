@@ -279,4 +279,4 @@ class DocumentModel(AbstractModel):
         ordering = ('order',)
 
     def __str__(self):
-        return self.name
+        return self.button_text
