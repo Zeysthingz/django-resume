@@ -49,7 +49,7 @@ class ImageSettingAdmin(admin.ModelAdmin):
         model = ImageSetting
 
 @admin.register(SkillModel)
-class SkillmodelAdmin(admin.ModelAdmin):
+class SkillModelAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'order',
@@ -70,4 +70,33 @@ class SkillmodelAdmin(admin.ModelAdmin):
 
     class Meta:
         model = SkillModel
+
+
+@admin.register(ExperienceModel)
+class ExperienceModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'company_name',
+        'job_title',
+        'job_location',
+        'start_date',
+        'end_date',
+        'updated_at',
+        'created_at'
+    ]
+    search_fields = [
+        'company_name',
+        'job_title',
+        'job_location'
+    ]
+    list_editable = [
+        'company_name',
+        'job_title',
+        'job_location',
+        'start_date',
+        'end_date',
+    ]
+
+    class Meta:
+        model = ExperienceModel
 

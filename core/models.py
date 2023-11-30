@@ -117,6 +117,7 @@ class SkillModel(AbastractModel):
         verbose_name='Percentage',
         validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
+
     class Meta:
         verbose_name = 'Skill Setting'
         verbose_name_plural = 'Skill Settings'
@@ -126,3 +127,46 @@ class SkillModel(AbastractModel):
         return self.name
 
 
+class ExperienceModel(AbastractModel):
+    company_name = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Company Name',
+        help_text='',
+    )
+
+    job_title = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Job Title',
+        help_text='',
+    )
+    job_location = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Job Location',
+        help_text='',
+    )
+    start_date = models.DateField(
+        verbose_name='Start Date'
+
+    )
+    end_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name='End Date'
+
+    )
+    class Meta:
+        verbose_name = 'Experience Setting'
+        verbose_name_plural = 'Experience Settings'
+        ordering = ('start_date',)
+
+    def __str__(self):
+        return self.company_name
