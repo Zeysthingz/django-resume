@@ -1,5 +1,9 @@
 from django.shortcuts import render
-from .models import GeneralSetting, ImageSetting
+from .models import (
+    GeneralSetting,
+    ImageSetting,
+    SkillModel,
+)
 
 
 # index page
@@ -15,6 +19,10 @@ def index(request):
     # Images
     home_banner_image = ImageSetting.objects.get(name='home_banner_image').file
     site_fav_icon = ImageSetting.objects.get(name='site_fav_icon').file
+
+    # Skills
+    skills = SkillModel.objects.all().order_by('order')
+
     context = {
         'site_title': site_title,
         'site_keywords': site_keywords,
@@ -24,5 +32,6 @@ def index(request):
         'home_banner_description': home_banner_description,
         'home_banner_image': home_banner_image,
         'site_fav_icon': site_fav_icon,
+        'skills': skills,
     }
     return render(request, 'index.html', context)

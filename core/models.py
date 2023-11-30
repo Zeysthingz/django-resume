@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
@@ -88,3 +89,40 @@ class ImageSetting(AbastractModel):
 
     def __str__(self):
         return self.name
+
+
+class SkillModel(AbastractModel):
+    order = models.IntegerField(
+        default=0,
+        verbose_name='Order',
+    )
+    name = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Name',
+        help_text='',
+    )
+    description = models.CharField(
+        default='',
+        max_length=256,
+        blank=True,
+        null=True,
+        verbose_name='Description',
+        help_text='',
+    )
+    percentage = models.IntegerField(
+        default=50,
+        verbose_name='Percentage',
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    )
+    class Meta:
+        verbose_name = 'Skill Setting'
+        verbose_name_plural = 'Skill Settings'
+        ordering = ('order',)
+
+    def __str__(self):
+        return self.name
+
+
