@@ -36,6 +36,9 @@ def index(request):
     # Social Media
     social_medias= SocialMediaModel.objects.all().order_by('order')
 
+    # Documents
+    documents=DocumentModel.objects.all().order_by('order')
+
 
     context = {
         'site_title': site_title,
@@ -50,13 +53,15 @@ def index(request):
         'experiences': experiences,
         'educations': educations,
         'social_medias': social_medias,
+        'documents':documents,
     }
     return render(request, 'index.html', context)
 
 
 def redirect_urls(request,slug):
-    cv=get_object_or_404(DocumentModel,slug=slug)
-    if cv:
-        return redirect(cv.file.url)
+    document=get_object_or_404(DocumentModel,slug=slug)
+
+    if document:
+        return redirect(document.file.url)
     else:
         return redirect(request, 'index')
