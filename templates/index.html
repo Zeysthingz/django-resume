@@ -45,29 +45,34 @@
 {% block content %}
 
 <!--================Welcome Area =================-->
-<section class="welcome_area p_120">
-    <div class="container">
-        <div class="row welcome_inner">
 
-            <div class="col-lg-6">
+<section class="welcome_area p_120 pb-3">
+    <div class="container">
+        <div class="row welcome_inner mb-5">
+            {% for skill in skills %}
+            <div class="col-md-3">
                 <div class="tools_expert">
                     <div class="skill_main">
-
-                        {% for skill in skills %}
-                            <div class="skill_item">
-                                <h4>{{ skill.name }} <span class="counter">{{ skill.percentage }}</span>%</h4>
-                                <div class="progress_br">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.percentage }}" aria-valuemin="0"
-                                             aria-valuemax="100"></div>
-                                    </div>
+                        <div class="skill_item">
+                            <h4>
+                                {{ skill.name }} <span
+                                    class="counter">{{ skill.percentage }}</span>%
+                            </h4>
+                            <div class="progress_br">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.percentage }}" aria-valuemin="0"
+                                         aria-valuemax="100"></div>
                                 </div>
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
     </div>
 </section>
 <!--================End Welcome Area =================-->
