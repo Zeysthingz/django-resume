@@ -1,8 +1,26 @@
 from django.db import models
 
 
-class GeneralSetting(models.Model):
-    site_title= models.CharField(
+class AbastractModel(models.Model):
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        blank=True,
+        verbose_name='Updated',
+        help_text='',
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        blank=True,
+        verbose_name='Created',
+        help_text='',
+    )
+
+    class Meta:
+        abstract = True
+
+
+class GeneralSetting(AbastractModel):
+    site_title = models.CharField(
         default='',
         max_length=256,
         blank=True,
@@ -27,18 +45,6 @@ class GeneralSetting(models.Model):
         verbose_name='Parameters',
         help_text='',
     )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        blank=True,
-        verbose_name='Updated',
-        help_text='',
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        blank=True,
-        verbose_name='Created',
-        help_text='',
-    )
 
     class Meta:
         verbose_name = 'General Setting'
@@ -49,8 +55,8 @@ class GeneralSetting(models.Model):
         return self.site_title
 
 
-class ImageSetting(models.Model):
-    name= models.CharField(
+class ImageSetting(AbastractModel):
+    name = models.CharField(
         default='',
         max_length=256,
         blank=True,
@@ -66,19 +72,7 @@ class ImageSetting(models.Model):
         verbose_name='Description',
         help_text='',
     )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        blank=True,
-        verbose_name='Updated',
-        help_text='',
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        blank=True,
-        verbose_name='Created',
-        help_text='',
-    )
-    file=models.ImageField(
+    file = models.ImageField(
         default='',
         blank=True,
         null=True,
