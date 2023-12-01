@@ -51,7 +51,7 @@ def index(request):
 
     # Social Media
     social_medias= SocialMediaModel.objects.all().order_by('order')
-    
+
     context = {
         'skills': skills,
         'experiences': experiences,
