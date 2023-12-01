@@ -25,7 +25,7 @@ urlpatterns = [
     path('', include('core.urls')),
 
    # contact page
-    path('', include('contact.urls')),
+    path('contact/', include('contact.urls')),
 ]
 
 # Serve static files and media files during development
