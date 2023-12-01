@@ -6,9 +6,7 @@ from django.shortcuts import render
 
 # contact page
 def contacts(request):
-    documents=DocumentModel.objects.all().order_by('order')
     context = {
-        'documents':documents,
     }
     return render(request, 'contact.html', context)
 
