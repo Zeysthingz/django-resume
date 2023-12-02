@@ -33,6 +33,7 @@ def contact_form(request):
                 subject=subject,
                 message=message,
             )
+            contact_form.send_email()
         else:
             success = False
             messages = 'Could not send message. Please try again later.'
