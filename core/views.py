@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import (
     DocumentModel,
     EducationModel,
@@ -10,21 +10,40 @@ from .models import (
 )
 
 
+def get_general_settings(parameter):
+    obj = None
+    try:
+        obj = GeneralSetting.objects.get(name=parameter).parameters
+    except:
+        obj = ''
+    return obj
+
+
+def get_image_settings(parameter):
+    img_obj = None
+    try:
+        img_obj = ImageSetting.objects.get(name=parameter).file
+    except:
+        img_obj = ''
+    return img_obj
+
+
 def layout(request):
+    site_title = get_general_settings('site_title')
+    site_keywords = get_general_settings('site_keywords')
+    site_description = get_general_settings('site_description')
+    home_banner_title = get_general_settings('home_banner_title')
+    home_banner_job = get_general_settings('home_banner_job')
+    home_banner_description = get_general_settings('home_banner_description')
+
+    # Images
+    home_banner_image = get_image_settings('home_banner_image')
+    site_fav_icon = get_image_settings('site_fav_icon')
 
     # Documents
-    documents=DocumentModel.objects.all().order_by('order')
-    site_title = GeneralSetting.objects.get(site_title='site_title').parameters
-    site_keywords = GeneralSetting.objects.get(site_title='site_keywords').parameters
-    site_description = GeneralSetting.objects.get(site_title='site_description').parameters
-    home_banner_title = GeneralSetting.objects.get(site_title='home_banner_title').parameters
-    home_banner_job = GeneralSetting.objects.get(site_title='home_banner_job').parameters
-    home_banner_description = GeneralSetting.objects.get(site_title='home_banner_description').parameters
-    # Images
-    home_banner_image = ImageSetting.objects.get(name='home_banner_image').file
-    site_fav_icon = ImageSetting.objects.get(name='site_fav_icon').file
-    context={
-        'documents':documents,
+    documents = DocumentModel.objects.all().order_by('order')
+    context = {
+        'documents': documents,
         'site_title': site_title,
         'site_keywords': site_keywords,
         'site_description': site_description,
@@ -36,10 +55,9 @@ def layout(request):
     }
     return context
 
+
 # index page
 def index(request):
-
-
     # Skills
     skills = SkillModel.objects.all().order_by('order')
 
@@ -50,7 +68,7 @@ def index(request):
     educations = EducationModel.objects.all().order_by('-start_date')
 
     # Social Media
-    social_medias= SocialMediaModel.objects.all().order_by('order')
+    social_medias = SocialMediaModel.objects.all().order_by('order')
 
     context = {
         'skills': skills,
@@ -61,7 +79,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def redirect_urls(request,slug):
-    document=get_object_or_404(DocumentModel,slug=slug)
+def redirect_urls(request, slug):
+    document = get_object_or_404(DocumentModel, slug=slug)
     if document:
         return redirect(document.file.url)
