@@ -21,9 +21,8 @@ class AbstractModel(models.Model):
 
 
 class GeneralSetting(AbstractModel):
-    name = models.CharField(
+    name = models.TextField(
         default='',
-        max_length=256,
         blank=True,
         null=True,
         verbose_name='Name',
