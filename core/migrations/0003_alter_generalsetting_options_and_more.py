@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='generalsetting',
-            options={'ordering': ('site_title',), 'verbose_name': 'General Setting', 'verbose_name_plural': 'General Settings'},
+            options={'ordering': ('name',), 'verbose_name': 'General Setting', 'verbose_name_plural': 'General Settings'},
         ),
         migrations.RemoveField(
             model_name='generalsetting',

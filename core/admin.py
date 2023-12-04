@@ -6,14 +6,14 @@ from .models import *
 class GeneralSettingAdmin(admin.ModelAdmin):
     list_display = [
         'id',
-        'site_title',
+        'name',
         'description',
         'parameters',
         'updated_at',
         'created_at'
     ]
     search_fields = [
-        'site_title',
+        'name',
         'description',
         'parameters',
     ]

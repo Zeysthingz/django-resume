@@ -21,7 +21,7 @@ class AbstractModel(models.Model):
 
 
 class GeneralSetting(AbstractModel):
-    site_title = models.CharField(
+    name = models.CharField(
         default='',
         max_length=256,
         blank=True,
@@ -50,10 +50,10 @@ class GeneralSetting(AbstractModel):
     class Meta:
         verbose_name = 'General Setting'
         verbose_name_plural = 'General Settings'
-        ordering = ('site_title',)
+        ordering = ('name',)
 
     def __str__(self):
-        return self.site_title
+        return self.name
 
 
 class ImageSetting(AbstractModel):
