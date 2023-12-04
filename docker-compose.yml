@@ -1,18 +1,35 @@
 version: '3.8'
 services:
-  app:
-    build:
-        context: .
-        dockerfile: Dockerfile
+  postgres:
+    image: postgres:latest
     env_file:
       - docker.env
-#    link local changes to container for continuous development
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+    command: -p 5432
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    env_file:
+      - docker.env
+    #    link local changes to container for continuous development
     volumes:
       - .:/srv/app
     ports:
       - "0.0.0.0:8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
 
+
+
+
 volumes:
+  postgres_data:
   static_data:
     
