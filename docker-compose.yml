@@ -12,6 +12,8 @@ services:
     command: -p 5432
 
   app:
+    container_name: app_resume
+    hostname: app_resume
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,6 +27,18 @@ services:
     ports:
       - "0.0.0.0:8000:8000"
     command: gunicorn resume.wsgi:application --bind 0.0.0.0:8000
+
+  nginx:
+    build:
+        context: ./nginx
+        dockerfile: nginx/Dockerfile
+    #  until stopped manually nginx will work
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+
 
 
 
