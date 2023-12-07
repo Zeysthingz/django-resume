@@ -31,17 +31,13 @@ services:
   nginx:
     build:
         context: ./nginx
-        dockerfile: nginx/Dockerfile
+        dockerfile: Dockerfile
     #  until stopped manually nginx will work
     restart: unless-stopped
     depends_on:
       - app
     ports:
       - "80:80"
-
-
-
-
 
 volumes:
   postgres_data:
