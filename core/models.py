@@ -1,5 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from resume.custom_storages import MediaStorage, DocumentStorage, ImageStorage
 
 
 class AbstractModel(models.Model):
@@ -78,7 +79,7 @@ class ImageSetting(AbstractModel):
         null=True,
         verbose_name='Image',
         help_text='',
-        upload_to='images/',
+        storage=ImageStorage(),
     )
 
     class Meta:
@@ -261,7 +262,7 @@ class DocumentModel(AbstractModel):
         null=True,
         verbose_name='File',
         help_text='',
-        upload_to='documents/',
+        storage=DocumentStorage(),
     )
     button_text = models.CharField(
         default='',
