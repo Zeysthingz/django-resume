@@ -4,12 +4,13 @@
 
 <!--================Home Banner Area =================-->
 <section class="home_banner_area">
-    <div class="container box_1620">
+    <div class="container box_1620 white-space:no-wrap" style="bottom: -150px;">
         <div class="banner_inner d-flex align-items-center">
             <div class="banner_content">
                 <div class="media">
                     <div class="d-flex">
-                        <img src="{{ home_banner_image.url }}" alt="" style="width: 500px;height: 500px;">
+                        <img src="{{ home_banner_image.url }}" alt=""
+                             style="width: 100%; height:400px; max-width: 500px">
                     </div>
                     <div class="media-body">
                         <div class="personal_text">
@@ -58,7 +59,8 @@
                             </h4>
                             <div class="progress_br">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.percentage }}" aria-valuemin="0"
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.percentage }}"
+                                         aria-valuemin="0"
                                          aria-valuemax="100"></div>
                                 </div>
                             </div>
@@ -82,24 +84,24 @@
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                        aria-controls="home" aria-selected="true">My Experiences</a>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"-->
-<!--                       aria-controls="profile" aria-selected="false">My Education</a>-->
-<!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"-->
+                <!--                       aria-controls="profile" aria-selected="false">My Education</a>-->
+                <!--                </li>-->
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <ul class="list">
-                       {% for experience in experiences %}
+                        {% for experience in experiences %}
                         <li>
                             <span></span>
                             <div class="media">
                                 <div class="d-flex">
                                     <p>{{ experience.start_date|date:"M Y" }} to
                                         {% if experience.end_date %}
-                                            {{ experience.end_date|date:"M Y" }}
+                                        {{ experience.end_date|date:"M Y" }}
                                         {% else %}
-                                            present
+                                        present
                                         {% endif %}
                                     </p>
                                 </div>
@@ -112,27 +114,103 @@
                         {% endfor %}
                     </ul>
                 </div>
-<!--                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">-->
-<!--                    <ul class="list">-->
-<!--                        {% for education in educations %}-->
-<!--                        <li>-->
-<!--                            <span></span>-->
-<!--                            <div class="media">-->
-<!--                                <div class="d-flex">-->
-<!--                                    <p>{{ education.start_date|date:"M Y" }}</p>-->
-<!--                                </div>-->
-<!--                                <div class="media-body">-->
-<!--                                    <h4>{ education.start_date|date:"M Y" }}</h4>-->
-<!--                                    <p>Senior Web Developer <br/>Santa monica, Los angeles</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </li>-->
-<!--                        {% endfor %}-->
-<!--                    </ul>-->
-<!--                </div>-->
             </div>
+
         </div>
     </div>
 </section>
 <!--================End My Tabs Area =================-->
+
+<!--================Contact Area =================-->
+<section class="contact_area p_120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="contact_info">
+                    <div class="info_item">
+                        <i class="lnr lnr-home"></i>
+                        <h6>Umranıye, Turkey</h6>
+                    </div>
+                    <div class="info_item mt-2">
+                        <i class="lnr lnr-envelope"></i>
+                        <h6><a href="mailto:zeynepakbalikk@gmail.com" target="_blank">zeynepakbalikk@gmail.com</a></h6>
+                        <p>Fell free to send me your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <form class="row contact_form" action="{% url 'index' %}" method="post" id="contactForm"
+                      novalidate="novalidate">
+                    {% csrf_token %}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="{{ contact_form.name.id_for_label }}"
+                                   name="{{ contact_form.name.html_name }}" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="{{ contact_form.email.id_for_label }}"
+                                   name="{{ contact_form.email.html_name }}"
+                                   placeholder="Enter email address">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="{{ contact_form.subject.id_for_label }}"
+                                   name="{{ contact_form.subject.html_name}}"
+                                   placeholder="Enter Subject">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <textarea class="form-control" name="{{ contact_form.message.html_name}}"
+                                      id="{{ contact_form.message.id_for_label }}" rows="1"
+                                      placeholder="Enter Message"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        <button type="submit" value="submit" class="btn submit_btn">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--================Contact Area =================-->
+
+<!--================Contact Success and Error message Area =================-->
+<div id="success" class="modal modal-message fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-close"></i>
+                </button>
+                <h2>Thank you</h2>
+                <p>Your message is successfully sent...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals error -->
+
+<div id="error" class="modal modal-message fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-close"></i>
+                </button>
+                <h2>Sorry !</h2>
+                <p> Something went wrong </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Contact Success and Error message Area =================-->
+
+{% endblock %}
+{% block extra_scripts %}
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/contact.js' %}"></script>
 {% endblock %}

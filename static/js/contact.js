@@ -58,10 +58,8 @@ $(document).ready(function () {
                     $(form).ajaxSubmit({
                         type: "POST",
                         data: $(form).serialize(),
-                        url: "/contact_form",
+                        url: "/",
                         success: function (response) {
-                            console.log(response);
-                            console.log(url);
                             if (response.success) {
                                 $('#contactForm :input').attr('disabled', 'disabled');
                                 $('#contactForm').fadeTo("slow", 1, function () {

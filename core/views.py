@@ -1,4 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import (
+    render,
+    redirect,
+    get_object_or_404
+)
+from django.http import JsonResponse
+from contact.forms import ContactForm
+from contact.models import Messages
 from .models import (
     DocumentModel,
     EducationModel,
@@ -58,6 +65,8 @@ def layout(request):
 
 # index page
 def index(request):
+
+
     # Skills
     skills = SkillModel.objects.all().order_by('order')
 
@@ -70,10 +79,41 @@ def index(request):
     # Social Media
     social_medias = SocialMediaModel.objects.all().order_by('order')
 
+    # Contact Form
+    contact_form = ContactForm()
+    if request.method == 'POST':
+        context = {
+            'success': False,
+            'message': '',
+        }
+        contact_form = ContactForm(request.POST or None)
+        if contact_form.is_valid():
+            name = contact_form.cleaned_data['name']
+            email = contact_form.cleaned_data['email']
+            subject = contact_form.cleaned_data['subject']
+            message = contact_form.cleaned_data['message']
+
+            # creates an object in the database
+            Messages.objects.create(
+                name=name,
+                email=email,
+                subject=subject,
+                message=message,
+            )
+            contact_form.send_email()
+            context['success'] = True
+            context['message'] = 'Thank you for your message. I will get back to you soon.'
+        else:
+            context['success'] = False
+            context['message'] = 'Could not send message. Please try again later.'
+        return JsonResponse(context)
+
+
     context = {
         'skills': skills,
         'experiences': experiences,
         'educations': educations,
+        'contact_form': contact_form,
         'social_medias': social_medias,
     }
     return render(request, 'index.html', context)
