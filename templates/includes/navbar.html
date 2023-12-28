@@ -15,7 +15,6 @@
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto">
                         <li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'contacts' %}">Contact</a></li>
                         {% for document in documents %}
                         <li class="nav-item"><a class="nav-link" href="{{ document.file.url }}" target="_blank"><i class="fa fa-download" style="margin-right: 5px"></i> {{ document.button_text }}</a></li>
                         {% endfor %}
