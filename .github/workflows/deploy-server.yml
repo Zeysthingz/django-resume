@@ -7,6 +7,7 @@ on:
     branches:
       - main
       - 'releases/**'
+      
 
 env:
   SSH_HOST: ${{ secrets.SSH_HOST }}
