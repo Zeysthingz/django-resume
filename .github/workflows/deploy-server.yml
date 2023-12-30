@@ -8,7 +8,7 @@ on:
       - main
       - 'releases/**'
 
-
+# takes secrets veriables
 env:
   SSH_HOST: ${{ secrets.SERVER_HOST_NAME }}
   SSH_PORT: 22
