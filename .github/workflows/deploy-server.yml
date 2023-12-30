@@ -10,10 +10,11 @@ on:
 
 
 env:
-  SSH_HOST: ${{ secrets.SSH_HOST }}
+  SSH_HOST: ${{ secrets.SERVER_HOST_NAME }}
   SSH_PORT: 22
-  SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-  SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+  SSH_USERNAME: ${{ secrets.SERVER_USER_NAME }}
+  SSH_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 jobs:
   deploy:
@@ -29,6 +30,7 @@ jobs:
           port: $SSH_PORT
           username: $SSH_USERNAME
           password: $SSH_PASSWORD
+          key: $SSH_PRIVATE_KEY
           script: |
             cd /home/django-resume
             git pull
