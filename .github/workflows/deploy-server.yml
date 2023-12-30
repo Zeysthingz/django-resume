@@ -7,7 +7,7 @@ on:
     branches:
       - main
       - 'releases/**'
-      
+
 
 env:
   SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -32,4 +32,4 @@ jobs:
           script: |
             cd /home/django-resume
             git pull
-            docker compose -f docker-compose.prod.yml up --build -d
+            docker compose -f docker-compose.yml up --build -d
