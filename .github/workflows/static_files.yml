@@ -1,0 +1,44 @@
+# This workflow will upload statics to AWS S3 on manual triggers
+
+name: Upload Static
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [ "Deploy to Server" ]
+    types:
+      - completed
+
+
+env:
+  SSH_HOST: ${{ secrets.SSH_HOST }}
+  SSH_PORT: 22
+  SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+  SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+
+jobs:
+  collectstatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+      #          since_last_remote_commit: true
+
+      - name: Get changed files in the static folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v35
+        with:
+          files: static/**
+
+      - name: Upload Static step if any file(s) in the static folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: appleboy/ssh-action@master
+        with:
+          host: $SSH_HOST
+          port: $SSH_PORT
+          username: $SSH_USERNAME
+          password: $SSH_PASSWORD
+          script: |
+            cd cd /home/django-resume
+            docker exec app python manage.py collectstatic --noinput
