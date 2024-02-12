@@ -6,6 +6,7 @@ from django.shortcuts import (
 from django.http import JsonResponse
 from contact.forms import ContactForm
 from contact.models import Messages
+from django.conf import settings
 from .models import (
     DocumentModel,
     EducationModel,
@@ -15,6 +16,7 @@ from .models import (
     SkillModel,
     SocialMediaModel,
 )
+import requests
 
 
 def get_general_settings(parameter):
@@ -35,6 +37,7 @@ def get_image_settings(parameter):
     return img_obj
 
 
+# context processor
 def layout(request):
     site_title = get_general_settings('site_title')
     site_keywords = get_general_settings('site_keywords')
@@ -59,14 +62,14 @@ def layout(request):
         'home_banner_description': home_banner_description,
         'home_banner_image': home_banner_image,
         'site_fav_icon': site_fav_icon,
+        'GOOGLE_RECAPTCHA_SITE_KEY': settings.GOOGLE_RECAPTCHA_SITE_KEY,
+
     }
     return context
 
 
 # index page
 def index(request):
-
-
     # Skills
     skills = SkillModel.objects.all().order_by('order')
 
@@ -80,13 +83,21 @@ def index(request):
     social_medias = SocialMediaModel.objects.all().order_by('order')
 
     # Contact Form
-    contact_form = ContactForm()
+    contact_form = ContactForm(request.POST or None)
     if request.method == 'POST':
         context = {
             'success': False,
             'message': '',
         }
-        contact_form = ContactForm(request.POST or None)
+        ''' reCAPTCHA validation '''
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = r.json()
+
         if contact_form.is_valid():
             name = contact_form.cleaned_data['name']
             email = contact_form.cleaned_data['email']
@@ -100,14 +111,17 @@ def index(request):
                 subject=subject,
                 message=message,
             )
-            contact_form.send_email()
-            context['success'] = True
-            context['message'] = 'Thank you for your message. I will get back to you soon.'
+            if result['success']:
+                contact_form.send_email()
+                context['success'] = True
+                context['message'] = 'Thank you for your message. I will get back to you soon.'
+            else:
+                context['success'] = False
+                context['message'] = 'Invalid reCAPTCHA. Please try again.'
         else:
             context['success'] = False
             context['message'] = 'Could not send message. Please try again later.'
         return JsonResponse(context)
-
 
     context = {
         'skills': skills,

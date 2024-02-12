@@ -12,6 +12,7 @@ RUN apt-get install python3-dev build-essential -y
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED=1
 ENV VIRTUAL_ENV=/opt/venv
 
 # pip requirements

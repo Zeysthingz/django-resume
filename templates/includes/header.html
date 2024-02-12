@@ -21,4 +21,27 @@
     <!-- main css -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <script src='https://www.google.com/recaptcha/api.js?render={{ GOOGLE_RECAPTCHA_SITE_KEY }}'></script>
+
+    <style>
+        .grecaptcha-badge {
+            opacity: 0 !important;
+        }
+
+        .toast-container {
+            position: fixed;
+            left: 25px;
+            bottom: 25px;
+            z-index: 9999;
+        }
+    </style>
+
+    <script>
+        //global grecaptcha
+        grecaptcha.ready(function () {
+            grecaptcha.execute('{{ GOOGLE_RECAPTCHA_SITE_KEY }}', {action: "{% url 'index' %}"}).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
+            });
+        });
+    </script>
 </head>

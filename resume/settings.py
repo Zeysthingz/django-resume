@@ -169,7 +169,12 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email Settings
+# ---------------------------- GOOGLE RECAPTCHA ----------------------------
+GOOGLE_RECAPTCHA_SITE_KEY = env('GOOGLE_RECAPTCHA_SITE_KEY')
+GOOGLE_RECAPTCHA_SECRET_KEY = env('GOOGLE_RECAPTCHA_SECRET_KEY')
+# ---------------------------- GOOGLE RECAPTCHA ----------------------------
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240 # higher than the count of fields
+
 
 # Email Settings
 vars().update(env.email_url())
