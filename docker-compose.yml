@@ -5,7 +5,7 @@ services:
     env_file:
       - docker.env
     networks:
-      - main_network
+      - site_network
     ports:
       - "5432:5432"
     volumes:
@@ -27,12 +27,12 @@ services:
       - app
       - redis
     networks:
-      - main_network
+      - site_network
   redis:
     image: redis:latest
     restart: unless-stopped
     networks:
-      - main_network
+      - site_network
 
   app:
     container_name: app_resume
@@ -44,7 +44,7 @@ services:
       - postgres
       - redis
     networks:
-      - main_network
+      - site_network
     env_file:
       - docker.env
     #    link local changes to container for continuous development
@@ -61,14 +61,14 @@ services:
     #  until stopped manually nginx will work
     restart: unless-stopped
     networks:
-      - main_network
+      - site_network
     depends_on:
       - app
     ports:
       - "80:80"
 
 networks:
-  main_network:
+  site_network:
 
 volumes:
   postgres_data:
