@@ -4,12 +4,35 @@ services:
     image: postgres:latest
     env_file:
       - docker.env
+    networks:
+      - main_network
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
     command: -p 5432
+
+  celery:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A resume worker -B -E -l INFO
+    env_file:
+      - ./docker.env
+    volumes:
+      - celery-data:/srv/public
+    depends_on:
+      - app
+      - redis
+    networks:
+      - main_network
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    networks:
+      - main_network
 
   app:
     container_name: app_resume
@@ -19,6 +42,9 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - postgres
+      - redis
+    networks:
+      - main_network
     env_file:
       - docker.env
     #    link local changes to container for continuous development
@@ -30,16 +56,21 @@ services:
 
   nginx:
     build:
-        context: ./nginx
-        dockerfile: Dockerfile
+      context: ./nginx
+      dockerfile: Dockerfile
     #  until stopped manually nginx will work
     restart: unless-stopped
+    networks:
+      - main_network
     depends_on:
       - app
     ports:
       - "80:80"
 
+networks:
+  main_network:
+
 volumes:
   postgres_data:
   static_data:
-    
+  celery-data:
